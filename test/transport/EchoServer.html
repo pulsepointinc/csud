@@ -1,0 +1,14 @@
+<html>
+    <head>
+        <meta http-equiv="Cache-control" content="public, max-age=360, s-max-age=360,">
+        <script src="/base/dist/test/transport.js"></script>
+        <script>
+        (function(){
+            /* set up an echo server */
+            new Transport.Server().listen(function(message,callback){
+                callback(null, message);
+            })
+        })();
+        </script>
+    </head>
+</html>

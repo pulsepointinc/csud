@@ -1,0 +1,21 @@
+<html>
+    <body>
+        <script>
+        ${userStorage.js}
+        </script>
+        <script>
+            new UserStorage({
+                getUserData: function(){
+                    var v = UserStorage.getCookie('V');
+                    if(v){
+                        return v;
+                    }else{
+                        v = 'n'+Math.floor(new Date().getTime()+Math.random());
+                        UserStorage.setCookie('V',v,'364');
+                        return v;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
