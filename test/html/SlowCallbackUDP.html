@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <meta http-equiv="Cache-control" content="public, max-age=360, s-max-age=360,">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+        <script src="../../userDataProvider.js"></script>
+        <script>
+        (function(){
+            /**
+             * Uses a slow callback to parrot back a request
+             */
+            new UserDataProvider().listen(function(request,callback){
+                setTimeout(function(){
+                    callback(null, request)
+                },100);
+            });
+        })();
+        </script>
+    </head>
+</html>

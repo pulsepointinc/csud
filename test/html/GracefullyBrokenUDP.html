@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <meta http-equiv="Cache-control" content="public, max-age=360, s-max-age=360,">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+        <script src="../../userDataProvider.js"></script>
+        <script>
+        (function(){
+            /**
+             * Errors gracefully by invoking callback with error
+             */
+            new UserDataProvider().listen(function(request,callback){
+                callback(new Error("I broken"));
+            });
+        })();
+        </script>
+    </head>
+</html>

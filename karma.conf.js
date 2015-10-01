@@ -92,10 +92,11 @@ module.exports = function(config) {
                 os_api_name : 'WinVista-C2'
            })
         },
-        reporters: ['mocha'],
-        //browsers: ['Remote-IE11']
-        //browsers: ['Chrome','Firefox','Safari']
+        reporters: ['mocha'],        
+        browsers: ['Chrome','Safari','Firefox']
+        //browsers: ['Safari']
         //browsers: ['Chrome']
-        browsers: ['CBT-IE9','CBT-IE10','CBT-IE11'] //'CBT-Chrome44','CBT-FF5']
+        //browsers: ['Firefox']
+        //browsers: ['CBT-IE9','CBT-IE10','CBT-IE11'] //'CBT-Chrome44','CBT-FF5']
     });
 };

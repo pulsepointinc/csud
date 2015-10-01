@@ -67,24 +67,6 @@ gulp.task('lint', function() {
  */
 gulp.task('dist',['lint','dist:copy-static-files'],function(callback) {
     var browserifyJobs = [
-        // {
-        //     /* storage.js / storage.html file */
-        //     entries: ['./lib/UserStorage.js'],
-        //     output: 'userStorage.js',
-        //     injectInto: 'static/storage.html',
-        //     replacing: '${userStorage.js}',
-        //     opts: {
-        //         standalone: 'UserStorage'
-        //     }
-        // },
-        // {
-        //     /* meat and potatoes application */
-        //     entries: ['./lib/UserStorageClient.js'],
-        //     output: 'userStorageClient.js',
-        //     opts:{
-        //         standalone: 'UserStorageClient'
-        //     }
-        // },
         {
             entries: ['./lib/UserDataProvider.js'],
             output: 'userDataProvider.js',
@@ -100,12 +82,10 @@ gulp.task('dist',['lint','dist:copy-static-files'],function(callback) {
             }
         },
         /* test stuff */
+        /* package mocha tests to run outside of Karam for things like IE6 testing */
         {
-            entries: ['./lib/transport/Transport.js'],
-            output: 'test/transport.js',
-            opts: {
-                standalone: 'Transport'
-            }
+            entries: ['./test/UserDataLoader.test.js'],
+            output: 'test/userDataLoader.test.js'
         }
     ];
     /* start off by copying stuff into destination */
@@ -138,9 +118,16 @@ gulp.task('dist',['lint','dist:copy-static-files'],function(callback) {
     });
 });
 
-gulp.task('dist:copy-static-files', function(){
+gulp.task('dist:copy-static-files', ['dist:package-tests'], function(){
     return gulp.src(config.paths.staticFiles)
         .pipe(gulp.dest(config.paths.dist));
+});
+
+gulp.task('dist:package-tests', function(){
+    /* copy test html files and mocha-test html doc into dist/test directory to be able to run mocha tests without karma */
+    return gulp.src('test/**/*.html').pipe(gulp.dest(config.paths.dist+'/test/'))
+            .pipe(gulp.src(['node_modules/mocha/**/*.*']))
+            .pipe(gulp.dest(config.paths.dist+'/test/'));
 });
 
 /**

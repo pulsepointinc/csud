@@ -1,13 +1,15 @@
 <html>
     <head>
         <meta http-equiv="Cache-control" content="public, max-age=360, s-max-age=360,">
-        <script src="/base/dist/userDataProvider.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
+        <script src="../../userDataProvider.js"></script>
         <script>
         (function(){
+            /**
+             * Errors out by throwing error
+             */
             new UserDataProvider().listen(function(request,callback){
-                /* parrot back response */
-                callback(null, request);
-                //alert('called callback with ' + JSON.stringify(request));
+                throw new Error("I broken");
             });
         })();
         </script>
