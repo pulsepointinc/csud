@@ -2,7 +2,8 @@
   "name": "vm2",
   "version": "1.0.0", 
   "dependencies" : {
-    
+    "easyxdm": "2.4.19-pre.2",
+    "json3": "3.3.2"
   },
   "devDependencies": {
 

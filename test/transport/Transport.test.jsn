@@ -1,4 +1,5 @@
 var Client = require('../../lib/transport/Transport.js').Client;
+//var Client = require('../../lib/transport/EasyXDMTransport.js').Client;
 var expect = require('chai').expect;
 
 describe('transport/Transport.js tests', function() {

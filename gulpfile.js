@@ -85,6 +85,20 @@ gulp.task('dist',['lint','dist:copy-static-files'],function(callback) {
         //         standalone: 'UserStorageClient'
         //     }
         // },
+        {
+            entries: ['./lib/UserDataProvider.js'],
+            output: 'userDataProvider.js',
+            opts: {
+                standalone: 'UserDataProvider'
+            }
+        },
+        {
+            entries: ['./lib/UserDataLoader.js'],
+            output: 'userDataLoader.js',
+            opts: {
+                standalone: 'UserDataLoader'
+            }
+        },
         /* test stuff */
         {
             entries: ['./lib/transport/Transport.js'],

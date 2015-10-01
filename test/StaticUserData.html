@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <meta http-equiv="Cache-control" content="public, max-age=360, s-max-age=360,">
+        <script src="/base/dist/userDataProvider.js"></script>
+        <script>
+        (function(){
+            new UserDataProvider().listen(function(request,callback){
+                /* parrot back response */
+                callback(null, request);
+                //alert('called callback with ' + JSON.stringify(request));
+            });
+        })();
+        </script>
+    </head>
+</html>
