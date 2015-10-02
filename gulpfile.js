@@ -81,7 +81,9 @@ gulp.task('dist',['lint','dist:package-tests'],function(callback) {
                 This does not correspond to the below apparantly
                 browserify().add(job.entries,job.opts).bundle()
             */
-            browserify(job.entries,job.opts).bundle()
+            browserify(job.entries,job.opts)
+                .plugin('bundle-collapser/plugin',{})
+                .bundle()
                 .pipe(source(job.output))
                 .pipe(buffer())
                 .pipe(uglify())

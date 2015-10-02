@@ -36,7 +36,7 @@
     "gulp-jshint": "1.11.2",
     "run-sequence": "1.1.2",
     "q": "1.4.1",
-    "glob": "5.0.15"
+    "bundle-collapser": "1.2.1"
   },
   "scripts": {
     "clean": "node_modules/gulp/bin/gulp.js clean",
