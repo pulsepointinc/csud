@@ -1,17 +1,26 @@
 {
   "name": "vm2",
-  "version": "1.0.0", 
-  "dependencies" : {
+  "description": "A client-side Ad Tech visitor matching library",
+  "version": "1.0.0",
+  "license": "PulsePoint",
+  "keywords": [
+    "visitor matching"
+  ],
+  "author": {
+    "name": "Eugene Rachitskiy",
+    "email": "erachitskiy@pulsepoint.com"
   },
+  "main": "lib/index.js",
+  "dependencies": {},
   "devDependencies": {
     "proclaim": "3.3.2",
-    "karma":"0.13.9",
-    "karma-mocha":"0.2.0",
-    "karma-chrome-launcher":"0.2.0",
-    "karma-firefox-launcher":"0.1.6",
-    "karma-safari-launcher":"0.1.1",
+    "karma": "0.13.9",
+    "karma-mocha": "0.2.0",
+    "karma-chrome-launcher": "0.2.0",
+    "karma-firefox-launcher": "0.1.6",
+    "karma-safari-launcher": "0.1.1",
     "karma-webdriverio-launcher": "git://github.com/tatablack/karma-webdriverjs-launcher.git",
-    "karma-browserify":"4.3.0",
+    "karma-browserify": "4.3.0",
     "karma-mocha-reporter": "1.1.1",
     "browserify": "11.0.1",
     "gulp": "3.8.11",
