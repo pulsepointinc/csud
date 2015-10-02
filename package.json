@@ -14,7 +14,9 @@
     "email": "erachitskiy@pulsepoint.com"
   },
   "main": "lib/index.js",
-  "dependencies": {},
+  "dependencies": {
+    "json3": "3.3.2"
+  },
   "devDependencies": {
     "proclaim": "3.3.2",
     "karma": "0.13.9",
