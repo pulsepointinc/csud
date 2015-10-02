@@ -1,4 +1,4 @@
-# vm2 #
+# csud #
 
 A device-side visitor matching library meant to improve AdTech visitor matching.
 

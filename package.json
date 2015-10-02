@@ -1,10 +1,13 @@
 {
-  "name": "vm2",
-  "description": "A client-side Ad Tech visitor matching library",
+  "name": "csud",
+  "description": "A client-side Ad Tech visitor matching and user data library",
   "version": "1.0.1-SNAPSHOT",
   "license": "PulsePoint",
   "keywords": [
-    "visitor matching"
+    "visitor matching",
+    "visitor sync",
+    "cookie sync",
+    "cookie matching"
   ],
   "author": {
     "name": "Eugene Rachitskiy",
