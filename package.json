@@ -1,7 +1,7 @@
 {
   "name": "vm2",
   "description": "A client-side Ad Tech visitor matching library",
-  "version": "1.0.0",
+  "version": "1.0.1-SNAPSHOT",
   "license": "PulsePoint",
   "keywords": [
     "visitor matching"

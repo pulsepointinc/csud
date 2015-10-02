@@ -1,6 +1,6 @@
 var UserDataLoader = require('../lib/UserDataLoader.js');
+/* proclaim is used here in place of chai or expect because it works with older browsers */
 var assert = require('proclaim');
-
 describe('UserDataLoader.js tests', function() {
     describe('#loadUserData',function(){
         it('loads user data using async callbacks', function(done){
