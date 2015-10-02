@@ -14,8 +14,8 @@ module.exports = function(config) {
                     record_video : "false",
                     record_network : "false",
                     record_snapshot :  "false",
-                    username : "exchangeteam@pulsepoint.com",
-                    password : "u7aead78d5ccbec1"
+                    username : process.env.CBT_USERNAME,
+                    password : process.env.CBT_API_KEY
                 }
             }
         };
@@ -24,12 +24,9 @@ module.exports = function(config) {
         }
         return ret;
     }
-    /* firefox test runner */
-    if(process.env.USER === 'eug'){
-        process.env['FIREFOX_BIN'] = '/Users/eug/Applications/Firefox.app/Contents/MacOS/firefox-bin';
-    }
     config.set({
-        hostname: '10.0.0.108',
+        hostname: 'localhost',
+        /* bump timeouts a bit for CBT test runners */
         captureTimeout: 120000,
         browserNoActivityTimeout: 120000,
         frameworks: [
@@ -92,11 +89,7 @@ module.exports = function(config) {
                 os_api_name : 'WinVista-C2'
            })
         },
-        reporters: ['mocha'],        
-        browsers: ['Chrome','Safari','Firefox']
-        //browsers: ['Safari']
-        //browsers: ['Chrome']
-        //browsers: ['Firefox']
-        //browsers: ['CBT-IE9','CBT-IE10','CBT-IE11'] //'CBT-Chrome44','CBT-FF5']
+        reporters: ['mocha'],
+        browsers: ['Chrome']
     });
 };
