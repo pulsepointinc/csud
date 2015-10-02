@@ -4,6 +4,7 @@ var browserify = require('browserify');
 var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
 var q = require('q');
+var glob = require("glob")
 var fs = require('fs');
 var jshint = require('gulp-jshint');
 var karma = require('karma');
@@ -70,6 +71,8 @@ gulp.task('dist',['lint','dist:copy-static-files'],function(callback) {
         {
             entries: ['./lib/UserDataProvider.js'],
             output: 'userDataProvider.js',
+            injectInto: 'static/*-udp.html',
+            replacing: '${userDataProvider.js}',
             opts: {
                 standalone: 'UserDataProvider'
             }
@@ -107,9 +110,20 @@ gulp.task('dist',['lint','dist:copy-static-files'],function(callback) {
         /* subsitute javascript into static html files as necessary */
         browserifyJobs.map(function(job){
             if(job.injectInto){
-                var injectIntoParts = job.injectInto.split('/');
-                var destFile = injectIntoParts[injectIntoParts.length-1];
-                fs.writeFileSync('dist/' + destFile, fs.readFileSync(job.injectInto,'utf-8').replace(job.replacing,fs.readFileSync('dist/' + job.output, 'utf-8')), 'utf-8');
+                glob(job.injectInto,{},function(error,files){
+                    if(error){
+                        callback(error,null);
+                        return;
+                    }
+                    for(var idx in files){
+                        var sourceFile = files[idx], sourceFileParts = sourceFile.split('/'), destFile = sourceFileParts[sourceFileParts.length -1];
+                        fs.writeFileSync('dist/' + destFile, 
+                            fs.readFileSync(sourceFile,'utf-8').replace(job.replacing,fs.readFileSync('dist/' + job.output, 'utf-8')), 'utf-8');
+                    }
+                });
+                // var injectIntoParts = job.injectInto.split('/');
+                // var destFile = injectIntoParts[injectIntoParts.length-1];
+                // fs.writeFileSync('dist/' + destFile, fs.readFileSync(job.injectInto,'utf-8').replace(job.replacing,fs.readFileSync('dist/' + job.output, 'utf-8')), 'utf-8');
             }
         });
         callback(null,true);

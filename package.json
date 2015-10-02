@@ -10,12 +10,10 @@
     "karma-chrome-launcher":"0.2.0",
     "karma-firefox-launcher":"0.1.6",
     "karma-safari-launcher":"0.1.1",
-    "karma-phantomjs-launcher":"0.2.1",
     "karma-webdriverio-launcher": "git://github.com/tatablack/karma-webdriverjs-launcher.git",
     "karma-browserify":"4.3.0",
     "karma-mocha-reporter": "1.1.1",
     "browserify": "11.0.1",
-    "html-minifyify": "1.0.0",
     "gulp": "3.8.11",
     "gulp-uglify": "1.2.0",
     "vinyl-source-stream": "1.1.0",
@@ -23,7 +21,8 @@
     "del": "1.2.0",
     "gulp-jshint": "1.11.2",
     "run-sequence": "1.1.2",
-    "q": "1.4.1"
+    "q": "1.4.1",
+    "glob": "5.0.15"
   },
   "scripts": {
     "clean": "node_modules/gulp/bin/gulp.js clean",
