@@ -18,7 +18,6 @@ The SSP API that loads user data from any number of user data providers is imple
 #### Usage ####
 [UserDataLoader.js](lib/UserDataLoader.js) is a javascript function that needs to be instantiated before it is used:
 ```
-javascript
 var udl = new UserDataLoader();
 ```
 
@@ -37,7 +36,6 @@ This function loads user data from a single user data provider.  This function a
 
 Example usage:
 ```
-javascript
 var udl = new UserDataLoader().loadUserData({
    url: 'http://bidder.com/csud/userDataProvider.html',
    timeout: 75,
@@ -66,7 +64,6 @@ This function loads user data from multiple user data providers.  This function 
 
 Example usage:
 ```
-javascript
 var udl = new UserDataLoader().loadAllUserData({
    timeout: 100,
    partners: {
@@ -110,7 +107,6 @@ http://csud.contextweb.com/csud/1.0.3/userDataLoader.js can be loaded directly i
 
 Example User Data Loader implementation using direct script include:
 ```
-html
 <html>
     <head>
         <script src="http://csud.contextweb.com/csud/1.0.3/userDataLoader.js"></script>
@@ -143,7 +139,6 @@ The DSP API that 'listens' for user data requests and replies with user data is 
 
 [UserDataProvider.js](lib/UserDataProvider.js) is a javascript function that needs to be instantiated before it is used:
 ```
-javascript
 var udp = new UserDataProvider();
 ```
 
@@ -168,7 +163,6 @@ Returned user data must be a JSON object that
 Example usage:
 
 ```
-javascript
 new UserDataProvider().listen(function(request,callback){
     callback(null, {
        id: 'my-org-user-id',
@@ -181,7 +175,6 @@ new UserDataProvider().listen(function(request,callback){
 or
 
 ```
-javascript
 new UserDataProvider().listen(function(request,callback){
    return {
        id: 'my-org-user-id',
@@ -220,7 +213,6 @@ http://csud.contextweb.com/csud/1.0.3/userDataProvider.js can be loaded directly
 
 Example User Data Loader implementation using direct script include:
 ```
-html
 <html>
     <head>
         <script src="http://csud.contextweb.com/csud/1.0.3/userDataProvider.js"></script>
