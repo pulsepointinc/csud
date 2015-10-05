@@ -311,6 +311,9 @@ browsers: ['CBT-IE9',...]
 npm run test
 ```
 
+## Browser Compatibility ##
+This library should be compatible with all modern desktop and mobile browsers including IE6.  See [here](http://app.crossbrowsertesting.com/public/ia308be7f44bd4a2/screenshots/z8a2b96d946934b66949) for per-browser test results.
+
 ## Technical notes ##
 
 ### Implementation details ###
