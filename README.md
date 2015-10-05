@@ -9,16 +9,16 @@ This library works by including a document provided by a partner cookie domain f
 
 This project aims for the following goals:
 
-* Real Time user data synchronization
+* **Real Time user data synchronization**
     * Unlike traditional visitor matching, csud should be able to provide user data in-band with ad-serving.
-* Ease of use
+* **Ease of use**
     * csud should be easy to set up - from a DSP's perspective, all that should be needed is to place a single html file on a web server on the DSP's cookie domain
-* Performance
+* **Performance**
     * unlike traditional or alternative visitor matching schemes, csud aims to use browser cache to cache code used by DSPs to read/generate user identifier information.  This should reduce redirect-heavy visitor matching traffic to a single-request-per-user-per-year
-* Security
+* **Security**
     * code executed by DSPs in order to provide user data should run in a sandbox and not allow unwanted access to publisher documents.
     * code executed by DSPs should provide only that user data to an SSP which the DSP finds relevant.
-* Scalability
+* **Scalability**
     * Organizations should own their own user data; since csud does not require SSPs to store visitor identifiers in SSP-domain cookies, DSPs can use practically any amount of user storage (cookie, localStorage space, or offline space) for user data.
 
 This project is set up as a node ```module``` and can either be imported directly into a project built with node *or* simply added to any HTML document via a ```<script>``` tag.
@@ -327,3 +327,6 @@ Several alternative visitor matching schemes (like Criteo's RTUS) use JSONP inst
 
 * JSONP can't be used to read cookies from the domain the JSONP javascript is served from.  This means a 100% client-side solution isn't possible.  A webserver is required to process requests, read/write cookies, and create JSONP responses.
 * JSONP is less secure in that it gives partners (DSPs) the ability to execute arbitrary javascript directly within the calling document (in some cases, a publisher page) at match time.
+
+## Comparison to traditional visitor matching ##
+See http://docs.pulse.corp/display/~ERachitskiy/Better+visitor+matching for a higher level discussion of CSUD.
