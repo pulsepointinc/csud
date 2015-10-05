@@ -5,6 +5,22 @@ A device-side visitor matching library meant to improve AdTech visitor matching.
 ## Overview ##
 This library works by including a document provided by a partner cookie domain for each match partner in ad markup before triggering an auction.  The included document allows the DSP to generate user data from cookies, localStorage, and any other available information available at request time.  The user data is then passed directly to the DSP as part of an RTB bid request.  In effect, this allows DSPs access to user browsers through RTB requests.
 
+![Workflow](http://www.websequencediagrams.com/cgi-bin/cdraw?lz=dGl0bGUgQ1NVRCByZWFsdGltZSB3b3JrZmxvdwoKQnJvd3Nlci0-UHVibGlzaGVyOiBHRVQgQ29udGVudAphY3RpdmF0ZSAAFwkKACEJLT4ANwc6ACcIIHdpdGggU1NQIGFkIG1hcmt1cApkZQAxE2xvb3AgRm9yIEVhY2ggRFNQIGluIGF1Y3Rpb24gKGluIHBhcmFsbGVsKQogAIEaCURTUDogR2V0IFVzZXIgRGF0YSBQcm92aWRlcgogAIEgCURTUAogbm90ZSBvdmVyADYILACBNwosRFNQCgA-BWRhdGEgcAA8ByBjb2RlIGlzIAoqIGV4ZWN1dGVkIG9uIHRoAE8FIGRvbWFpbgoqIHNob3VsZCBiZSBjYWNoZWQgaW5kZWZpbmV0bHkAKQhiAIJRBgoqIHRoaXMgcmVxdWVzdAAzCG9ubHkgaGFwcGVuIG9uY2UgcGVyIHVzZXIKIGVuZACBOAUKIERTUACCVgsAgWESIChqcykgCiAAglULRFNQCmVuZACDSwpTAIItBUVUIEFkAINAClNTUACCVCxTU1AAgnQHT3BlblJUQiBiaWQAgUkJAINsBXUAgkUICgCCbgpEU1AsU1NQCgAiE3MgY29udGFpbgAuC2dlbmVyYXRlZCBieQCCeAdpbmcAg1YUAIMhBgCCWQ4Agi0JAIN5DQCCPQUAgX4FAIEvCwCFBAwAgigIAIFeBQCFQwlBZCBNAIU1Bg&s=qsd)
+
+This project aims for the following goals:
+
+* Real Time user data synchronization
+    * Unlike traditional visitor matching, csud should be able to provide user data in-band with ad-serving.
+* Ease of use
+    * csud should be easy to set up - from a DSP's perspective, all that should be needed is to place a single html file on a web server on the DSP's cookie domain
+* Performance
+    * unlike traditional or alternative visitor matching schemes, csud aims to use browser cache to cache code used by DSPs to read/generate user identifier information.  This should reduce redirect-heavy visitor matching traffic to a single-request-per-user-per-year
+* Security
+    * code executed by DSPs in order to provide user data should run in a sandbox and not allow unwanted access to publisher documents.
+    * code executed by DSPs should provide only that user data to an SSP which the DSP finds relevant.
+* Scalability
+    * Organizations should own their own user data; since csud does not require SSPs to store visitor identifiers in SSP-domain cookies, DSPs can use practically any amount of user storage (cookie, localStorage space, or offline space) for user data.
+
 This project is set up as a node ```module``` and can either be imported directly into a project built with node *or* simply added to any HTML document via a ```<script>``` tag.
 
 ## API ##
