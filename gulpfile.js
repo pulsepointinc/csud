@@ -99,9 +99,8 @@ gulp.task('dist',['lint','dist:package-tests'],function(callback) {
 
 gulp.task('dist:package-tests', function(){
     /* copy test html files and mocha-test html doc into dist/test directory to be able to run mocha tests without karma */
-    return gulp.src('test/**/*.html').pipe(gulp.dest('dist/test/'))
-            .pipe(gulp.src(['node_modules/mocha/**/*.*']))
-            .pipe(gulp.dest('dist/test/'));
+    return gulp.src(['test/**/*.html','node_modules/mocha/**/*.js','node_modules/mocha/**/*.css'])
+        .pipe(gulp.dest('dist/test/'));
 });
 
 /**
