@@ -304,10 +304,6 @@ On top of static testing, Karma can run tests via CrossBrowserTesting.com.  To d
     * ```CBT_API_KEY``` - CBT API key
 * Run ``` npm run test -- --cbt ```
 
-```
-npm run test
-```
-
 ## Browser Compatibility ##
 This library should be compatible with all modern desktop and mobile browsers including IE6.  See [here](http://app.crossbrowsertesting.com/public/ia308be7f44bd4a2/screenshots/z8a2b96d946934b66949) for per-browser test results.
 
