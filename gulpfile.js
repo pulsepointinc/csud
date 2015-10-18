@@ -68,7 +68,7 @@ gulp.task('test', ['dist'], function(done) {
                 projectVersion: require('./package.json').version,
                 testId: Math.ceil(Math.ceil(new Date().getTime() + Math.random() * 100000) % 10000),
             }).updateKarmaConfig(karmaOptions);
-            karmaOptions.browsers = ['chrome-45-win-7-x64','ie-11-win-8.1','chrome-mob-38-android-galaxy-tab-2-4.1'];
+            karmaOptions.browsers = ['chrome-45-win-7-x64','ie-10-win-8','chrome-mob-38-android-galaxy-tab-2-4.1'];
             runKarma(function(){
                 tunnelProc.kill();
             });
