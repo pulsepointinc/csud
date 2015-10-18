@@ -25,6 +25,7 @@
     "karma-firefox-launcher": "0.1.6",
     "karma-safari-launcher": "0.1.1",
     "karma-webdriverio-launcher": "git://github.com/tatablack/karma-webdriverjs-launcher.git",
+    "cbt-util": "git+ssh://git@github.com:pulsepointinc/node-cbt.git#1.0.1",
     "karma-browserify": "4.3.0",
     "karma-mocha-reporter": "1.1.1",
     "browserify": "11.0.1",
@@ -36,7 +37,8 @@
     "gulp-jshint": "1.11.2",
     "run-sequence": "1.1.2",
     "q": "1.4.1",
-    "bundle-collapser": "1.2.1"
+    "bundle-collapser": "1.2.1",
+    "minimist": "1.2.0"
   },
   "scripts": {
     "clean": "node_modules/gulp/bin/gulp.js clean",

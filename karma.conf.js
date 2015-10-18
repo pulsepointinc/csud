@@ -1,29 +1,4 @@
-var PackageJSON = require('./package.json');
-var testId = Math.ceil(Math.ceil(new Date().getTime() + Math.random() * 100000) % 10000);
 module.exports = function(config) {
-    var makeCBTConfig = function(caps){
-        var ret = {
-            base: 'WebdriverIO',
-            config: {
-                host: 'hub.crossbrowsertesting.com',
-                port: 80,
-                desiredCapabilities: {
-                    name : PackageJSON.name + ' Karma Tests',
-                    build :  PackageJSON.version + ' - [' + testId + ']',
-                    screen_resolution : '1024x768',
-                    record_video : "false",
-                    record_network : "false",
-                    record_snapshot :  "false",
-                    username : process.env.CBT_USERNAME,
-                    password : process.env.CBT_API_KEY
-                }
-            }
-        };
-        for(var cap in caps){
-            ret.config.desiredCapabilities[cap] = caps[cap];
-        }
-        return ret;
-    }
     config.set({
         hostname: 'localhost',
         /* bump timeouts a bit for CBT test runners */
@@ -61,33 +36,6 @@ module.exports = function(config) {
             /* apply browserify to all tests and lib files */
             'test/**/*.js': [ 'browserify' ],
             'lib/**/*.js' : [ 'browserify' ],
-        },
-        customLaunchers: {
-            'CBT-FF5': makeCBTConfig({
-                browserName: 'firefox',
-                browser_api_name: 'FF5',
-                os_api_name : 'WinXPSP3'
-            }),
-            'CBT-Chrome44': makeCBTConfig({
-                browserName: 'chrome',
-                browser_api_name: 'Chrome44',
-                os_api_name : 'WinXPSP3'
-            }),
-            'CBT-IE11': makeCBTConfig({
-                browserName: 'internet explorer',
-                browser_api_name: 'IE11',
-                os_api_name : 'Win7x64-Base'
-            }),
-            'CBT-IE10': makeCBTConfig({
-                browserName : "internet explorer",
-                browser_api_name : 'IE10', 
-                os_api_name : 'Win7x64-C2'
-            }),
-            'CBT-IE9': makeCBTConfig({
-                browserName : "internet explorer",
-                browser_api_name : 'IE9', 
-                os_api_name : 'WinVista-C2'
-           })
         },
         reporters: ['mocha'],
         browsers: ['Chrome']

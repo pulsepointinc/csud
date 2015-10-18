@@ -1,12 +1,16 @@
-var gulp = require('gulp');
-var source = require('vinyl-source-stream');
-var browserify = require('browserify');
-var buffer = require('vinyl-buffer');
-var uglify = require('gulp-uglify');
-var q = require('q');
-var jshint = require('gulp-jshint');
-var karma = require('karma');
-var del = require('del');
+var gulp = require('gulp'),
+    source = require('vinyl-source-stream'),
+    browserify = require('browserify'),
+    buffer = require('vinyl-buffer'),
+    uglify = require('gulp-uglify'),
+    q = require('q'),
+    jshint = require('gulp-jshint'),
+    karma = require('karma'),
+    del = require('del'),
+    Tunnel = require('node-cbt').Tunnel,
+    KarmaConfigGenerator = require('node-cbt').KarmaConfigGenerator,
+    minimist = require('minimist'),
+    cliArgs = minimist(process.argv.slice(2));
 
 /**
  * Default task of 
@@ -35,18 +39,46 @@ gulp.task('lint', function() {
 /**
  * Run tests
  */
- gulp.task('test', ['dist'], function(done) {
-    new karma.Server({
-        configFile: __dirname + '/karma.conf.js',
-        singleRun: true
-    }, function(exitCode){
-        if(exitCode !== 0){
-            done("Karma tests failed");
-        }else{
-            done();
+gulp.task('test', ['dist'], function(done) {
+    var karmaOptions = {
+            configFile: __dirname + '/karma.conf.js',
+            singleRun: true,
+        },
+        runKarma = function(finishCallback){
+            new karma.Server(karmaOptions, function(exitCode){
+                    if(finishCallback){
+                        finishCallback(exitCode);
+                    }
+                    if(exitCode !== 0){
+                        done("Karma tests failed");
+                    }else{
+                        done();
+                    }
+            }).start();
+        };
+    if(cliArgs["cbt"] === true){
+        if(!process.env.CBT_USERNAME || !process.env.CBT_API_KEY){
+            throw new Error('CBT_USERNAME or CBT_API_KEY environment variables not set; see README.md');
         }
-    }).start();
- });
+        new Tunnel({apiKey: process.env.CBT_API_KEY}).runTunnel().then(function(tunnelProc){
+            new KarmaConfigGenerator({
+                userName: process.env.CBT_USERNAME,
+                apiKey: process.env.CBT_API_KEY,
+                projectName: require('./package.json').name,
+                projectVersion: require('./package.json').version,
+                testId: Math.ceil(Math.ceil(new Date().getTime() + Math.random() * 100000) % 10000),
+            }).updateKarmaConfig(karmaOptions);
+            karmaOptions.browsers = ['chrome-45-win-7-x64','ie-11-win-8.1','chrome-mob-38-android-galaxy-tab-2-4.1'];
+            runKarma(function(){
+                tunnelProc.kill();
+            });
+        }).catch(function(error){
+            done(error);
+        });
+    }else{
+        runKarma();
+    }
+});
 
 /**
  * Make a distribution package (from lib/ into dist/)

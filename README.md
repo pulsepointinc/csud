@@ -296,17 +296,14 @@ csud is distributed as a node module and can be built and tested locally using n
 The 'dist' task creates a 'test' directory under ```dist/``` which contains a file called ```mocha-tests.html```.  This file can be loaded in any browser to run mocha tests.  Static testing is employed by this project because Karma runners for older browsers such as IE6 are either unavailable or do not work via sebdriver server farms such as [CrossbrowserTesting](http://crossbrowsertesting.com/) or [SauceLabs](https://saucelabs.com/).
 
 ### Testing via CrossBrowserTesting.com ###
-On top of static testing, Karma can be configured via [karma.conf.js](karma.conf.js) to run karma tests via CrossBrowserTesting.com.  To do so, 
+On top of static testing, Karma can run tests via CrossBrowserTesting.com.  To do so, 
 
-* Edit the [karma.conf.js](karma.conf.js) file and update the browsers array:
-```
-browsers: ['CBT-IE9',...]
-```
+* Select desired browsers/devices by editing [gulpfile.js](gulpfile.js)
 * Update environment variables
     * ```CBT_USERNAME``` - CBT username
     * ```CBT_API_KEY``` - CBT API key
-* Run ```cbttunnel.jar``` as instructed by [CrossbrowserTesting](http://crossbrowsertesting.com/)
-* Run tests
+* Run ``` npm run test -- --cbt ```
+
 ```
 npm run test
 ```
