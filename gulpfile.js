@@ -7,8 +7,7 @@ var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     karma = require('karma'),
     del = require('del'),
-    Tunnel = require('node-cbt').Tunnel,
-    KarmaConfigGenerator = require('node-cbt').KarmaConfigGenerator,
+    cbtkarma = require('node-cbt').KarmaUtil,
     minimist = require('minimist'),
     cliArgs = minimist(process.argv.slice(2));
 
@@ -41,43 +40,20 @@ gulp.task('lint', function() {
  */
 gulp.task('test', ['dist'], function(done) {
     var karmaOptions = {
-            configFile: __dirname + '/karma.conf.js',
-            singleRun: true,
-        },
-        runKarma = function(finishCallback){
-            new karma.Server(karmaOptions, function(exitCode){
-                    if(finishCallback){
-                        finishCallback(exitCode);
-                    }
-                    if(exitCode !== 0){
-                        done("Karma tests failed");
-                    }else{
-                        done();
-                    }
-            }).start();
-        };
-    if(cliArgs["cbt"] === true){
-        if(!process.env.CBT_USERNAME || !process.env.CBT_API_KEY){
-            throw new Error('CBT_USERNAME or CBT_API_KEY environment variables not set; see README.md');
-        }
-        new Tunnel({apiKey: process.env.CBT_API_KEY}).runTunnel().then(function(tunnelProc){
-            new KarmaConfigGenerator({
-                userName: process.env.CBT_USERNAME,
-                apiKey: process.env.CBT_API_KEY,
-                projectName: require('./package.json').name,
-                projectVersion: require('./package.json').version,
-                testId: Math.ceil(Math.ceil(new Date().getTime() + Math.random() * 100000) % 10000),
-            }).updateKarmaConfig(karmaOptions);
-            karmaOptions.browsers = ['chrome-45-win-7-x64','ie-10-win-8','chrome-mob-38-android-galaxy-tab-2-4.1'];
-            runKarma(function(){
-                tunnelProc.kill();
-            });
-        }).catch(function(error){
-            done(error);
-        });
-    }else{
-        runKarma();
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true,
+        cbtUserName: process.env.CBT_USERNAME,
+        cbtApiKey: process.env.CBT_API_KEY
+    };
+    if(cliArgs['cbt']){
+        karmaOptions.cbt = true;
+        karmaOptions.browsers = ['ie-10-win-8'];
     }
+    cbtkarma.runKarma(karmaOptions).then(function(){
+        done();
+    }).catch(function(exitCode){
+        done(new Error('Karma server exited with code: ' + exitCode));
+    });
 });
 
 /**
