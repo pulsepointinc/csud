@@ -10,7 +10,8 @@ var gulp = require('gulp'),
     cbtkarma = require('node-cbt').KarmaUtil,
     minimist = require('minimist'),
     cliArgs = minimist(process.argv.slice(2)),
-    release = require('node-release');
+    release = require('node-release'),
+    runSequence = require('run-sequence');
 
 /**
  * Default task of 
