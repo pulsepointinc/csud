@@ -9,7 +9,8 @@ var gulp = require('gulp'),
     del = require('del'),
     cbtkarma = require('node-cbt').KarmaUtil,
     minimist = require('minimist'),
-    cliArgs = minimist(process.argv.slice(2));
+    cliArgs = minimist(process.argv.slice(2)),
+    release = require('node-release');
 
 /**
  * Default task of 
@@ -33,6 +34,31 @@ gulp.task('lint', function() {
         .pipe(jshint())
         .pipe(jshint.reporter('default'))
         .pipe(jshint.reporter('fail'));
+});
+
+/**
+ * Perform a release (see https://github.com/pulsepointinc/node-release)
+ */
+gulp.task('release', function(callback){
+    release.perform({
+        projectPath: __dirname,
+        buildPromise: function(releaseData){
+            return q.Promise(function(resolve,reject){
+                runSequence('clean','test',function(error,results){
+                    if(error){
+                        reject(error);
+                    }
+                    resolve();
+                });
+            });
+        }
+    }).then(function(result){
+        console.log("Released "+result.releaseVersion);
+        console.log("Dev version is now "+result.devVersion);
+        callback();
+    }).catch(function(error){
+        callback(error);
+    });
 });
 
 /**
