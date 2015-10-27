@@ -1,7 +1,7 @@
 {
   "name": "csud",
   "description": "A client-side Ad Tech visitor matching and user data library",
-  "version": "1.0.4-SNAPSHOT",
+  "version": "1.0.4",
   "license": "GPL-3.0",
   "keywords": [
     "visitor matching",
@@ -49,7 +49,7 @@
     "develop": "node_modules/gulp/bin/gulp.js develop",
     "release": "node_modules/gulp/bin/gulp.js release"
   },
-  "repository":{
+  "repository": {
     "type": "git",
     "url": "https://github.com/pulsepointinc/csud.git"
   }
