@@ -46,7 +46,8 @@
     "clean": "node_modules/gulp/bin/gulp.js clean",
     "test": "node_modules/gulp/bin/gulp.js test",
     "dist": "node_modules/gulp/bin/gulp.js dist",
-    "develop": "node_modules/gulp/bin/gulp.js develop"
+    "develop": "node_modules/gulp/bin/gulp.js develop",
+    "release": "node_modules/gulp/bin/gulp.js release"
   },
   "repository":{
     "type": "git",

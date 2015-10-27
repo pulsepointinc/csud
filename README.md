@@ -292,6 +292,9 @@ csud is distributed as a node module and can be built and tested locally using n
 ### Building packages ###
 ``` npm run dist ```
 
+### Releasing ###
+``` npm run release ```
+
 ### Static testing ###
 The 'dist' task creates a 'test' directory under ```dist/``` which contains a file called ```mocha-tests.html```.  This file can be loaded in any browser to run mocha tests.  Static testing is employed by this project because Karma runners for older browsers such as IE6 are either unavailable or do not work via sebdriver server farms such as [CrossbrowserTesting](http://crossbrowsertesting.com/) or [SauceLabs](https://saucelabs.com/).
 
