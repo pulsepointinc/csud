@@ -108,13 +108,13 @@ This is the preferred method of importing UserDataLoader into a project.  csum u
 ```
 ...
 "dependencies": {
-    "csud": "git+ssh://git@github.com:pulsepointinc/csud.git#1.0.5"
+    "csud": "git+ssh://git@github.com:pulsepointinc/csud.git#1.1.0"
   }
 ...
 ```
 alternatively, run:
 ```
-npm install git+ssh://git@github.com:pulsepointinc/csud.git#1.0.5
+npm install git+ssh://git@github.com:pulsepointinc/csud.git#1.1.0
 ```
 require ```UserDataLoader``` inside of your node project using:
 ```
@@ -213,13 +213,13 @@ This is the preferred method of building UserDataProvider implementations.  csum
 ```
 ...
 "dependencies": {
-    "csud": "git+ssh://git@github.com:pulsepointinc/csud.git#1.0.5"
+    "csud": "git+ssh://git@github.com:pulsepointinc/csud.git#1.1.0"
   }
 ...
 ```
 alternatively, run:
 ```
-npm install git+ssh://git@github.com:pulsepointinc/csud.git#1.0.5
+npm install git+ssh://git@github.com:pulsepointinc/csud.git#1.1.0
 ```
 require ```UserDataProvider``` inside of your node project using:
 ```
