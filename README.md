@@ -65,6 +65,16 @@ var udl = new UserDataLoader().loadUserData({
 });
 ```
 
+Example ```loadUserData``` results:
+```
+{
+  id: 'mandatory-user-id',
+  ext: {
+     opt: 'optional extra data'
+  }
+}
+```
+
 ##### UserDataLoader.loadAllUserData(request) #####
 This function loads user data from multiple user data providers.  This function accepts a single argument called ```request``` that should contain the following properties:
 
@@ -101,6 +111,26 @@ var udl = new UserDataLoader().loadAllUserData({
        ...
    }     
 });
+```
+
+Example ```loadAllUserData``` results:
+```
+{
+  partnerResponses: {
+    'test-dsp': {
+      result: {
+        id: 'test-dsp-user-id',
+        ext: {}
+      },
+      rtime: 14
+    },
+    'another-partner': {
+      error: 'timeout',
+      rtime: 25
+    }
+  },
+  rtime: 26
+}
 ```
 
 #### Using as part of a node project ####
