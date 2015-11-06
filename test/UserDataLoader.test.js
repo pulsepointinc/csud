@@ -129,31 +129,27 @@ describe('UserDataLoader.js tests', function() {
                     }
                 },
                 responseHandler: function(error, results){
-                    try{
-                        assert.isUndefined(error);
-                        
-                        assert.isUndefined(results.partnerResponses['callback-udp'].error);
-                        assert.equal(results.partnerResponses['callback-udp'].result,'callback-udp');
-                        
-                        assert.isUndefined(results.partnerResponses['slow-callback-udp'].error);
-                        assert.equal(results.partnerResponses['slow-callback-udp'].result,'slow-callback-udp');
+                    assert.isUndefined(error);
+                    
+                    assert.isUndefined(results['callback-udp'].error);
+                    assert.equal(results['callback-udp'].result,'callback-udp');
+                    
+                    assert.isUndefined(results['slow-callback-udp'].error);
+                    assert.equal(results['slow-callback-udp'].result,'slow-callback-udp');
 
-                        assert.isUndefined(results.partnerResponses['sync-udp'].error);
-                        assert.equal(results.partnerResponses['sync-udp'].result,'sync-udp');
+                    assert.isUndefined(results['sync-udp'].error);
+                    assert.equal(results['sync-udp'].result,'sync-udp');
 
-                        
-                        assert.equal(results.partnerResponses['broken-udp'].error,'I broken');
-                        assert.isUndefined(results.partnerResponses['broken-udp'].result);
+                    
+                    assert.equal(results['broken-udp'].error,'I broken');
+                    assert.isUndefined(results['broken-udp'].result);
 
-                        assert.equal(results.partnerResponses['gracefully-broken-udp'].error,'I broken');
-                        assert.isUndefined(results.partnerResponses['gracefully-broken-udp'].result);
+                    assert.equal(results['gracefully-broken-udp'].error,'I broken');
+                    assert.isUndefined(results['gracefully-broken-udp'].result);
 
-                        assert.equal(results.partnerResponses['unresponsive-udp'].error,'timeout');
-                        assert.isUndefined(results.partnerResponses['unresponsive-udp'].result);
-                    }catch(err){
-                        done(err);
-                        return;
-                    }
+                    assert.equal(results['unresponsive-udp'].error,'timeout');
+                    assert.isUndefined(results['unresponsive-udp'].result);
+                    
                     done();
                 }
             });
@@ -179,24 +175,20 @@ describe('UserDataLoader.js tests', function() {
                     }
                 },
                 responseHandler: function(error, results){
-                    try{
-                        assert.isUndefined(error);
-                        
-                        assert.isUndefined(results.partnerResponses['callback-udp'].error);
-                        assert.equal(results.partnerResponses['callback-udp'].result,'w-callback-udp');
-                        
-                        /* do not make any asserts on slow-callback-udp because some browsers seem to fail to set this timeout */
-                        /*
-                        assert.equal(results['slow-callback-udp'].error,'timeout');
-                        assert.isUndefined(results['slow-callback-udp'].result);
-                        */
-                        
-                        assert.isUndefined(results.partnerResponses['sync-udp'].error);
-                        assert.equal(results.partnerResponses['sync-udp'].result,'w-sync-udp');
-                    }catch(err){
-                        done(err);
-                        return;
-                    }
+                    assert.isUndefined(error);
+                    
+                    assert.isUndefined(results['callback-udp'].error);
+                    assert.equal(results['callback-udp'].result,'w-callback-udp');
+                    
+                    /* do not make any asserts on slow-callback-udp because some browsers seem to fail to set this timeout */
+                    /*
+                    assert.equal(results['slow-callback-udp'].error,'timeout');
+                    assert.isUndefined(results['slow-callback-udp'].result);
+                    */
+                    
+                    assert.isUndefined(results['sync-udp'].error);
+                    assert.equal(results['sync-udp'].result,'w-sync-udp');
+                    
                     done();
                 }
             });

@@ -76,26 +76,23 @@ This function loads user data from multiple user data providers.  This function 
         * **timeout** {number}
             * optional partner-specific timeout in milliseconds that overrides global timeout
 * **responseHandler**
-    * mandatory node-compatible response handler function (function(error,result)); results is an object with a 'partnerResponses' property that contains an object keys representing partner names from the partners object and values containing either "result" Object properties or "error" strings
+    * mandatory node-compatible response handler function (function(error,result)); results is an object with keys representing partner names from the partners object and values containing either "result" Object properties or "error" strings
 
 Example usage:
 ```
 var udl = new UserDataLoader().loadAllUserData({
    timeout: 100,
    partners: {
-       'dbm': { url: '//dbm.com/csud/userDataProvider.html' },
-       'iponweb': { url: '//bidswitch.com/csud/udp.html'}
+       'dsp-a': { url: '//dsp-a.com/csud/userDataProvider.html' },
+       'dsp-b': { url: '//dsp-b.com/csud/udp.html'}
    },   
    responseHandler: function(error, results){
        if(error){
            throw new Error('Could not get user data from any partners:' + error);
        }
-       var totalResponseTime = results.rtime,
-           partnerResponses = results.partnerResponses;
-
-       if(!partnerResponses['dbm'].error){
-           var dbmUserData = partnerResponses['dbm'].result,
-               dbmUserId = dbmUserData.id;
+       if(!results['dsp-a'].error){
+           var dspAuserData = results['dsp-a'].result,
+               dspAuserId = dspAuserData.id;
            ...
        }
        ...
@@ -108,13 +105,13 @@ This is the preferred method of importing UserDataLoader into a project.  csum u
 ```
 ...
 "dependencies": {
-    "csud": "git+ssh://git@github.com:pulsepointinc/csud.git#1.1.0"
+    "csud": "git+ssh://git@github.com:pulsepointinc/csud.git#1.0.3"
   }
 ...
 ```
 alternatively, run:
 ```
-npm install git+ssh://git@github.com:pulsepointinc/csud.git#1.1.0
+npm install git+ssh://git@github.com:pulsepointinc/csud.git#1.0.3
 ```
 require ```UserDataLoader``` inside of your node project using:
 ```
@@ -139,7 +136,7 @@ Example User Data Loader implementation using direct script include:
                     }
                 },
                 responseHandler: function(error, results){
-                    var dspAuserId = results.partnerResponses['dsp-a'].result.id;
+                    var dspAuserId = results['dsp-a'].result.id;
                     ...
                 }
             });
@@ -213,13 +210,13 @@ This is the preferred method of building UserDataProvider implementations.  csum
 ```
 ...
 "dependencies": {
-    "csud": "git+ssh://git@github.com:pulsepointinc/csud.git#1.1.0"
+    "csud": "git+ssh://git@github.com:pulsepointinc/csud.git#1.0.3"
   }
 ...
 ```
 alternatively, run:
 ```
-npm install git+ssh://git@github.com:pulsepointinc/csud.git#1.1.0
+npm install git+ssh://git@github.com:pulsepointinc/csud.git#1.0.3
 ```
 require ```UserDataProvider``` inside of your node project using:
 ```
