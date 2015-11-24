@@ -362,3 +362,7 @@ Several alternative visitor matching schemes (like Criteo's RTUS) use JSONP inst
 
 ## Comparison to traditional visitor matching ##
 See http://docs.pulse.corp/display/~ERachitskiy/Better+visitor+matching for a higher level discussion of CSUD.
+
+## License ##
+This software is ©2015 by PulsePoint Inc.,
+All rights reserved.
