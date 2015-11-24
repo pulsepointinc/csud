@@ -2,7 +2,7 @@
   "name": "csud",
   "description": "A client-side Ad Tech visitor matching and user data library",
   "version": "1.1.1-SNAPSHOT",
-  "license": "PulsePoint-CSUD",
+  "license": "GPL-3.0",
   "keywords": [
     "visitor matching",
     "visitor sync",
