@@ -60,6 +60,18 @@ describe('UserDataLoader.js tests', function() {
                 }
             });
         });
+        it('supprots "gracefully" broken UserDataProviders that return error strings instead of Error objects', function(done){
+            var ud = {'id':'4',ext:{fcap:4}};
+            udl.loadUserData({
+                url: htmlRoot + 'GracefullyBrokenUDPwithNoErrorObj.html',
+                payload: ud,
+                responseHandler: function(error, response){
+                    assert.isUndefined(response);
+                    assert.equal(error,'I am broken');
+                    done();
+                }
+            });
+        });
         it('times out on unresponsive UserDataProviders', function(done){
             var ud = {'id':'5',ext:{fcap:5}};
             udl.loadUserData({
