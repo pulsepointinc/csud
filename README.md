@@ -152,13 +152,13 @@ var UserDataLoader = require('csud').UserDataLoader;
 ```
 
 #### Importing directly #####
-http://csud.contextweb.com/csud/1.0.3/userDataLoader.js can be loaded directly inside a script tag; this will place [UserDataLoader.js](lib/UserDataLoader.js) into the global scope as ```UserDataLoader```.  Direct script includes are potentially slower and harder to test than purpose-built distributions; consider building a browserify/requirejs/amd bundle instead!
+http://csud.contextweb.com/csud/1.1.1/userDataLoader.js can be loaded directly inside a script tag; this will place [UserDataLoader.js](lib/UserDataLoader.js) into the global scope as ```UserDataLoader```.  Direct script includes are potentially slower and harder to test than purpose-built distributions; consider building a browserify/requirejs/amd bundle instead!
 
 Example User Data Loader implementation using direct script include:
 ```
 <html>
     <head>
-        <script src="http://csud.contextweb.com/csud/1.0.3/userDataLoader.js"></script>
+        <script src="http://csud.contextweb.com/csud/1.1.1/userDataLoader.js"></script>
         <script>
             var udl = new UserDataLoader();
             udl.loadAllUserData({
@@ -258,13 +258,13 @@ var UserDataProvider = require('csud').UserDataProvider;
 
 #### Importing directly #####
 
-http://csud.contextweb.com/csud/1.0.3/userDataProvider.js can be loaded directly inside a script tag; this will place [UserDataProvider.js](lib/UserDataProvider.js) into the global scope as ```UserDataProvider```.  Direct script includes are potentially slower and harder to test than purpose-built distributions; consider building a browserify/requirejs/amd bundle instead!
+http://csud.contextweb.com/csud/1.1.1/userDataProvider.js can be loaded directly inside a script tag; this will place [UserDataProvider.js](lib/UserDataProvider.js) into the global scope as ```UserDataProvider```.  Direct script includes are potentially slower and harder to test than purpose-built distributions; consider building a browserify/requirejs/amd bundle instead!
 
 Example User Data Loader implementation using direct script include:
 ```
 <html>
     <head>
-        <script src="http://csud.contextweb.com/csud/1.0.3/userDataProvider.js"></script>
+        <script src="http://csud.contextweb.com/csud/1.1.1/userDataProvider.js"></script>
         <script>
             new UserDataProvider().listen(function(message,callback){
                 return ...;
@@ -278,7 +278,7 @@ Example User Data Loader implementation using direct script include:
 ```
 The ```...``` placeholder in the example above can be replaced with javascript code to obtain and return a user id.  See the DSP API notes above for more detailed instructions.
 
-Note that http://csud.contextweb.com/csud/1.0.3/userDataProvider.js bundles a JSONv3 polyfill; users should *not* rely on this bundle providing a JSON polyfill since support can be removed in future releases.
+Note that http://csud.contextweb.com/csud/1.1.1/userDataProvider.js bundles a JSONv3 polyfill; users should *not* rely on this bundle providing a JSON polyfill since support can be removed in future releases.
 
 #### Recommendations ####
 The html file containing the UserDataProvider distribution package needs to be loaded as fast as possible; since there are no server side dependencies it should also be heavily cached.  To this end,it:
@@ -350,7 +350,7 @@ This package prefers to use the well-supported HTML5 [window.postMessage](https:
 
 *All* messages are always JSON encoded.  For compatibility reasons, ```window.postMessage``` payload data is encoded into a String (not all browsers support passing object payload data).
 
-In order to support older browsers, the http://csud.contextweb.com/csud/1.0.3/userDataProvider.js and http://csud.contextweb.com/csud/1.0.3/userDataLoader.js distribution packages bundle [JSON3](https://bestiejs.github.io/json3/).  Users should *not* rely on this polyfill though since it may be removed from the distribution bundles in fugure releases.
+In order to support older browsers, the http://csud.contextweb.com/csud/1.1.1/userDataProvider.js and http://csud.contextweb.com/csud/1.1.1/userDataLoader.js distribution packages bundle [JSON3](https://bestiejs.github.io/json3/).  Users should *not* rely on this polyfill though since it may be removed from the distribution bundles in fugure releases.
 
 At the moment, user data request payloads are empty - user data request messages simply serve to represent a single request for user data.  In the future, the API allows the SSP to communicate its own user data as part of the user data request.  One example of such user data might be pre-auction information the SSP wants to share with a DSP such as SSP user identifiers, user demographic information, and user frequency habits.  This type of information is typically available as part of server-server RTB requests, but can potentially be used to short-circuit auctions in the future.
 
