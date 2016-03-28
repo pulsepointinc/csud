@@ -1,7 +1,7 @@
 {
   "name": "csud",
   "description": "A client-side Ad Tech visitor matching and user data library",
-  "version": "1.1.1",
+  "version": "1.1.2-SNAPSHOT",
   "license": "GPL-3.0",
   "keywords": [
     "visitor matching",
