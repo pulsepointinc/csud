@@ -26,7 +26,7 @@
     "karma-firefox-launcher": "0.1.6",
     "karma-safari-launcher": "0.1.1",
     "karma-webdriverio-launcher": "git://github.com/ProfessorEugene/karma-webdriverio-launcher.git#0.1.1",
-    "cbt-util": "git+ssh://git@github.com:pulsepointinc/node-cbt.git#1.0.4",
+    "node-cbt": "git+ssh://git@github.com:pulsepointinc/node-cbt.git#1.0.4",
     "node-release": "pulsepointinc/node-release#node-release-1.0.3",
     "karma-browserify": "4.3.0",
     "karma-mocha-reporter": "1.1.1",
