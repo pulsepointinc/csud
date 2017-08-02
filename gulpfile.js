@@ -11,7 +11,16 @@ var gulp = require('gulp'),
     minimist = require('minimist'),
     cliArgs = minimist(process.argv.slice(2)),
     release = require('node-release'),
-    runSequence = require('run-sequence');
+    runSequence = require('run-sequence'),
+    packageJson = require('./package.json'),
+    exec = require('child_process').exec;
+
+var config = {
+    remote: {
+        host: 'pp-web-content',
+        path: '/mnt/Production/Data/AdExchange/websites/static.contextweb.com/csud/'
+    }
+};
 
 /**
  * Default task of 
@@ -26,6 +35,14 @@ gulp.task('default', ['develop']);
 gulp.task('clean', function(callback) {
     del(['dist'], callback);
 });
+
+/**
+ * Log build information
+ */
+gulp.task('info', [], function () {
+    console.log('Version: ' + packageJson.version);
+});
+
 
 /**
  * JSHint sources
@@ -43,14 +60,35 @@ gulp.task('lint', function() {
 gulp.task('release', function(callback){
     release.perform({
         projectPath: __dirname,
-        buildPromise: function(releaseData){
-            return q.Promise(function(resolve,reject){
-                runSequence('clean','test',function(error,results){
-                    if(error){
-                        reject(error);
+        buildPromise: function(releaseData) {
+            packageJson.version = releaseData.releaseVersion;
+            return q.Promise(function(resolve,reject) {
+                runSequence(
+                    'clean',
+                    'test',
+                    function(error,results) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve();
+                        }
                     }
-                    resolve();
-                });
+                );
+            });
+        },
+        postReleasePromise: function(releaseData){
+            packageJson.version = releaseData.releaseVersion;
+            return q.Promise(function(resolve,reject) {
+                runSequence(
+                    'scp-deploy',
+                    function (error, results) {
+                        if (error) {
+                            reject(error);
+                        } else {
+                            resolve();
+                        }
+                    }
+                );
             });
         }
     }).then(function(result){
@@ -60,6 +98,33 @@ gulp.task('release', function(callback){
     }).catch(function(error){
         callback(error);
     });
+});
+
+/**
+ * Create remote folder
+ */
+gulp.task('scp-prepare', [], function(callback) {
+    exec('ssh ' + config.remote.host + ' mkdir -p ' + config.remote.path + packageJson.version,
+        function (err, stdout, stderr) {
+            console.log(stdout);
+            console.log(stderr);
+            callback(err);
+        }
+    )
+});
+
+/**
+ * Copy files to remote folder
+ */
+gulp.task('scp-deploy', ['dist', 'scp-prepare'], function(callback) {
+    exec('rsync -avzr --delete dist/*.js '
+        + config.remote.host + ':' + config.remote.path + packageJson.version,
+        function (err, stdout, stderr) {
+            console.log(stdout);
+            console.log(stderr);
+            callback(err);
+        }
+    )
 });
 
 /**
@@ -86,7 +151,7 @@ gulp.task('test', ['dist'], function(done) {
 /**
  * Make a distribution package (from lib/ into dist/)
  */
-gulp.task('dist',['lint','dist:package-tests'],function(callback) {
+gulp.task('dist', ['info', 'clean', 'lint', 'dist:package-tests'], function(callback) {
     var browserifyJobs = [
         {
             entries: ['./lib/UserDataProvider.js'],
@@ -132,7 +197,7 @@ gulp.task('dist',['lint','dist:package-tests'],function(callback) {
     });
 });
 
-gulp.task('dist:package-tests', function(){
+gulp.task('dist:package-tests', ['clean'], function(){
     /* copy test html files and mocha-test html doc into dist/test directory to be able to run mocha tests without karma */
     return gulp.src(['test/**/*.html','node_modules/mocha/**/*.js','node_modules/mocha/**/*.css'])
         .pipe(gulp.dest('dist/test/'));
