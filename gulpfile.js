@@ -6,21 +6,13 @@ var gulp = require('gulp'),
     q = require('q'),
     jshint = require('gulp-jshint'),
     karma = require('karma'),
-    del = require('del'),
     cbtkarma = require('node-cbt').KarmaUtil,
     minimist = require('minimist'),
     cliArgs = minimist(process.argv.slice(2)),
-    release = require('node-release'),
-    runSequence = require('run-sequence'),
-    packageJson = require('./package.json'),
-    exec = require('child_process').exec;
+    deploy = require('node-release-deploy').project(__dirname);
 
-var config = {
-    remote: {
-        host: 'pp-web-content',
-        path: '/mnt/Production/Data/AdExchange/websites/static.contextweb.com/csud/'
-    }
-};
+deploy.config.scp.name = 'csud';
+deploy.config.scp.local = 'dist/*.js';
 
 /**
  * Default task of 
@@ -32,15 +24,15 @@ gulp.task('default', ['develop']);
 /**
  * Clean everything
  */
-gulp.task('clean', function(callback) {
-    del(['dist'], callback);
+gulp.task('clean', function() {
+    return deploy.delete_dirs(['dist']);
 });
 
 /**
  * Log build information
  */
 gulp.task('info', [], function () {
-    console.log('Version: ' + packageJson.version);
+    return deploy.print_digest();
 });
 
 
@@ -57,74 +49,15 @@ gulp.task('lint', function() {
 /**
  * Perform a release (see https://github.com/pulsepointinc/node-release)
  */
-gulp.task('release', function(callback){
-    release.perform({
-        projectPath: __dirname,
-        buildPromise: function(releaseData) {
-            packageJson.version = releaseData.releaseVersion;
-            return q.Promise(function(resolve,reject) {
-                runSequence(
-                    'clean',
-                    'test',
-                    function(error,results) {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            resolve();
-                        }
-                    }
-                );
-            });
-        },
-        postReleasePromise: function(releaseData){
-            packageJson.version = releaseData.releaseVersion;
-            return q.Promise(function(resolve,reject) {
-                runSequence(
-                    'scp-deploy',
-                    function (error, results) {
-                        if (error) {
-                            reject(error);
-                        } else {
-                            resolve();
-                        }
-                    }
-                );
-            });
-        }
-    }).then(function(result){
-        console.log("Released "+result.releaseVersion);
-        console.log("Dev version is now "+result.devVersion);
-        callback();
-    }).catch(function(error){
-        callback(error);
-    });
-});
-
-/**
- * Create remote folder
- */
-gulp.task('scp-prepare', [], function(callback) {
-    exec('ssh ' + config.remote.host + ' mkdir -p ' + config.remote.path + packageJson.version,
-        function (err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
-            callback(err);
-        }
-    )
+gulp.task('release', function () {
+    return deploy.release(['test'], ['scp-deploy']);
 });
 
 /**
  * Copy files to remote folder
  */
-gulp.task('scp-deploy', ['dist', 'scp-prepare'], function(callback) {
-    exec('rsync -avzr --delete dist/*.js '
-        + config.remote.host + ':' + config.remote.path + packageJson.version,
-        function (err, stdout, stderr) {
-            console.log(stdout);
-            console.log(stderr);
-            callback(err);
-        }
-    )
+gulp.task('scp-deploy', ['dist'], function () {
+    return deploy.scp_deploy();
 });
 
 /**
