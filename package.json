@@ -1,7 +1,7 @@
 {
   "name": "csud",
   "description": "A client-side Ad Tech visitor matching and user data library",
-  "version": "1.1.2-SNAPSHOT",
+  "version": "1.1.3-SNAPSHOT",
   "license": "GPL-3.0",
   "keywords": [
     "visitor matching",
@@ -27,7 +27,7 @@
     "karma-safari-launcher": "0.1.1",
     "karma-webdriverio-launcher": "git://github.com/ProfessorEugene/karma-webdriverio-launcher.git#0.1.1",
     "node-cbt": "git+ssh://git@github.com:pulsepointinc/node-cbt.git#1.0.4",
-    "node-release": "pulsepointinc/node-release#node-release-1.0.3",
+    "node-release-deploy": "git+ssh://git@github.com:pulsepointinc/node-release-deploy.git#node-release-deploy-1.0.0",
     "karma-browserify": "4.3.0",
     "karma-mocha-reporter": "1.1.1",
     "browserify": "11.0.1",

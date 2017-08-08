@@ -6,12 +6,13 @@ var gulp = require('gulp'),
     q = require('q'),
     jshint = require('gulp-jshint'),
     karma = require('karma'),
-    del = require('del'),
     cbtkarma = require('node-cbt').KarmaUtil,
     minimist = require('minimist'),
     cliArgs = minimist(process.argv.slice(2)),
-    release = require('node-release'),
-    runSequence = require('run-sequence');
+    deploy = require('node-release-deploy').project(__dirname);
+
+deploy.config.scp.name = 'csud';
+deploy.config.scp.local = 'dist/*.js';
 
 /**
  * Default task of 
@@ -23,9 +24,17 @@ gulp.task('default', ['develop']);
 /**
  * Clean everything
  */
-gulp.task('clean', function(callback) {
-    del(['dist'], callback);
+gulp.task('clean', function() {
+    return deploy.delete_dirs(['dist']);
 });
+
+/**
+ * Log build information
+ */
+gulp.task('info', [], function () {
+    return deploy.print_digest();
+});
+
 
 /**
  * JSHint sources
@@ -40,26 +49,15 @@ gulp.task('lint', function() {
 /**
  * Perform a release (see https://github.com/pulsepointinc/node-release)
  */
-gulp.task('release', function(callback){
-    release.perform({
-        projectPath: __dirname,
-        buildPromise: function(releaseData){
-            return q.Promise(function(resolve,reject){
-                runSequence('clean','test',function(error,results){
-                    if(error){
-                        reject(error);
-                    }
-                    resolve();
-                });
-            });
-        }
-    }).then(function(result){
-        console.log("Released "+result.releaseVersion);
-        console.log("Dev version is now "+result.devVersion);
-        callback();
-    }).catch(function(error){
-        callback(error);
-    });
+gulp.task('release', function () {
+    return deploy.release(['test'], ['scp-deploy']);
+});
+
+/**
+ * Copy files to remote folder
+ */
+gulp.task('scp-deploy', ['dist'], function () {
+    return deploy.scp_deploy();
 });
 
 /**
@@ -86,7 +84,7 @@ gulp.task('test', ['dist'], function(done) {
 /**
  * Make a distribution package (from lib/ into dist/)
  */
-gulp.task('dist',['lint','dist:package-tests'],function(callback) {
+gulp.task('dist', ['info', 'clean', 'lint', 'dist:package-tests'], function(callback) {
     var browserifyJobs = [
         {
             entries: ['./lib/UserDataProvider.js'],
@@ -132,7 +130,7 @@ gulp.task('dist',['lint','dist:package-tests'],function(callback) {
     });
 });
 
-gulp.task('dist:package-tests', function(){
+gulp.task('dist:package-tests', ['clean'], function(){
     /* copy test html files and mocha-test html doc into dist/test directory to be able to run mocha tests without karma */
     return gulp.src(['test/**/*.html','node_modules/mocha/**/*.js','node_modules/mocha/**/*.css'])
         .pipe(gulp.dest('dist/test/'));
