@@ -13,6 +13,7 @@ var gulp = require('gulp'),
 
 deploy.config.scp.name = 'csud';
 deploy.config.scp.local = 'dist/*.js';
+deploy.config.scp.path = '/mnt/lga_emc_data/AdExchange/websites/static.contextweb.com';
 
 /**
  * Default task of 
